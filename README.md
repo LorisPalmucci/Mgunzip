@@ -6,9 +6,10 @@ Uno script batch per Windows che automatizza l'estrazione di archivi (`.7z`, `.z
 
 Lo script opera in un ciclo continuo, chiedendo all'utente di inserire un'azione:
 
-1.  **Ricerca dell'archivio**: Cerca i file che corrispondono al nome o al pattern fornito (es. `MioArchivio.7z`, `Progetto*.zip`) all'interno di una cartella predefinita: `C:\Users\User\Downloads\Telegram Desktop`.
-2.  **Estrazione**: Per ogni archivio trovato, crea una nuova cartella con lo stesso nome dell'archivio (senza estensione) ed estrae lì tutto il suo contenuto.
-3.  **Copia e Pulizia (Opzionale)**:
+1.  **Scelta del Percorso**: All'inizio di ogni ciclo, lo script mostra il percorso di ricerca attuale e chiede all'utente se desidera cambiarlo.
+2.  **Ricerca dell'archivio**: Cerca i file che corrispondono al nome o al pattern fornito (es. `MioArchivio.7z`, `Progetto*.zip`) all'interno della cartella di ricerca selezionata.
+3.  **Estrazione**: Per ogni archivio trovato, crea una nuova cartella con lo stesso nome dell'archivio (senza estensione) ed estrae lì tutto il suo contenuto.
+4.  **Copia e Pulizia (Opzionale)**:
     *   Se viene specificato un percorso di destinazione (es. un drive `D:`), lo script copia la cartella estratta in quella posizione.
     *   Dopo la copia, elimina sia la cartella temporanea creata nella directory di origine sia l'archivio originale.
     *   Se non viene specificato alcun percorso, i file estratti rimangono semplicemente nella cartella di origine e l'archivio originale non viene cancellato.
@@ -20,18 +21,21 @@ Lo script opera in un ciclo continuo, chiedendo all'utente di inserire un'azione
 
 ## Utilizzo
 
+Lo script si avvia in un ciclo interattivo:
+
 1.  Eseguire il file `mgunzip.bat`.
-2.  Quando richiesto, inserire il **nome del file** o un **pattern** per trovare gli archivi da processare. Ad esempio:
-    *   `MioArchivio.7z` per un file specifico.
-    *   `Epic*.7z` per tutti i file che iniziano con "Epic" e hanno estensione ".7z".
-3.  Quando richiesto, inserire il **percorso del dispositivo di destinazione** dove copiare i file estratti (es. `D`).
-    *   **Lasciare vuoto e premere Invio** se non si desidera spostare i file e si vuole solo estrarli nella cartella di origine.
-4.  Per terminare lo script, digitare `exit` e premere Invio al primo prompt.
+2.  Lo script mostrerà il **percorso di ricerca attuale** e chiederà se si desidera cambiarlo.
+    *   Digitare `s` e premere Invio per specificare un nuovo percorso per questa sessione.
+    *   Premere Invio (o digitare `n`) per usare il percorso attuale.
+3.  Inserire il **nome del file** o un **pattern** per trovare gli archivi da processare (es. `MioArchivio.7z`, `Epic*.7z`).
+4.  Inserire il **percorso del dispositivo di destinazione** dove copiare i file estratti (es. `D`).
+    *   Lasciare vuoto e premere Invio se non si desidera spostare i file.
+5.  Il ciclo ricomincia. Per terminare, digitare `exit` quando viene richiesto il nome del file.
 
 ## Nota importante
 
-La cartella di origine degli archivi è impostata staticamente all'interno dello script. Se i tuoi file si trovano in un percorso diverso, dovrai modificare la seguente riga nel file `mgunzip.bat`:
+Il percorso di ricerca predefinito è impostato all'inizio dello script. Se si desidera cambiare questo valore di default in modo permanente, è possibile modificare la seguente riga nel file `mgunzip.bat`:
 
 ```batch
-set "SOURCE_DIR=C:\Users\User\Downloads\Telegram Desktop"
+set "DEF_DIR=C:\Users\User"
 ```

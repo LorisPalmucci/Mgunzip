@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set "DEF_DIR=C:\Users\User\Downloads\Telegram Desktop"
+set "DEF_DIR=C:\Users\User"
 set "SOURCE_DIR=!DEF_DIR!"
 
 :loop
