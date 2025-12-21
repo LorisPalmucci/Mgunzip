@@ -1,17 +1,26 @@
 @echo off
 setlocal enabledelayedexpansion
 
+set "DEF_DIR=C:\Users\User\Downloads\Telegram Desktop"
+set "SOURCE_DIR=!DEF_DIR!"
+
 :loop
+echo.
+echo Percorso di ricerca attuale: !SOURCE_DIR!
+set /p "change_path=Vuoi cambiarlo? (s/n, default n): "
+if /i "!change_path!"=="s" (
+    set /p "new_path=Inserisci il nuovo percorso: "
+    if defined new_path set "SOURCE_DIR=!new_path!"
+)
+
 echo.
 set /p "archivio_pattern=Inserisci nome file/pattern (es. Epic*.7z) o "exit" per uscire: "
 if /i "!archivio_pattern!"=="exit" goto :fine
 
 set /p "device=Inserisci il path del device di destinazione (lascia vuoto per non copiare): "
 
-set "SOURCE_DIR=C:\Users\User\Downloads\Telegram Desktop"
-
 REM Itera su tutti i file che corrispondono al pattern inserito
-FOR %%F IN ("%SOURCE_DIR%\!archivio_pattern!") DO (
+FOR %%F IN ("!SOURCE_DIR!\!archivio_pattern!") DO (
     echo.
     echo --- Processando: "%%~nxF" ---
 
