@@ -43,18 +43,20 @@ FOR %%F IN ("!SOURCE_DIR!\!archivio_pattern!") DO (
         if not "!device!"=="" (
             set "DEST_DIR=!device!:\!FOLDER_NAME!"
             echo  - Copia in: "!DEST_DIR!"
-            xcopy "!OUTPUT_DIR!" "!DEST_DIR!" /E /I /Y
+            xcopy "!OUTPUT_DIR!" "!DEST_DIR!" /E /I /Y /v
+            
             if !errorlevel! equ 0 (
                 echo   [SUCCESSO] Copia completata.
+                echo  - Eliminazione dei file sorgente...
+                rmdir "!OUTPUT_DIR!" /s /q
+                del "%%~fF" /q
+                if !errorlevel! equ 0 (
+                    echo   [SUCCESSO] Eliminazione completata.
+                ) else (
+                    echo   [ERRORE] L'eliminazione dei sorgenti e' fallita.
+                )
             ) else (
-                echo   [ERRORE] Copia fallita.
-            )
-            rmdir "!OUTPUT_DIR!" /s /q
-            del "%%~fF" /q
-            if !errorlevel! equ 0 (
-                echo   [SUCCESSO] Eliminazione completata.
-            ) else (
-                echo   [ERRORE] Eliminazione fallita.
+                echo   [ERRORE] Copia fallita. I file sorgente NON sono stati eliminati per sicurezza.
             )
         )
     ) else (
